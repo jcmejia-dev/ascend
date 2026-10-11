@@ -54,7 +54,7 @@ export function reconcileCertificate(
         updatedAt: now.toISOString(),
         ...(Number(course.totalLessons || 0) === 0
           ? { manualProgress: 100 }
-          : {}),
+          : { completedLessons: Number(course.totalLessons) }),
       }
     : course;
   return {
