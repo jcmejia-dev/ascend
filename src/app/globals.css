@@ -2,7 +2,6 @@
 @import "./academy.css";
 @import "./auth.css";
 @import "./assistant.css";
-@import "./refinement.css";
 @font-face {
   font-family: Geist;
   src: url("/fonts/geist-latin.woff2") format("woff2");
