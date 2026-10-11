@@ -7,7 +7,7 @@ import { applyAssistance } from "@/lib/learning-assistant";
 import { recommendResources } from "@/lib/discovery";
 import { liveCourseSchema } from "@/lib/assistant-schema";
 import { accountRequest } from "@/lib/account";
-import { dateKey } from "@/lib/model";
+import { dateKey, safeUrl } from "@/lib/model";
 import { Modal } from "./ui";
 import type { LearningProps } from "./education-shared";
 export default function LearningAssistant(
@@ -255,6 +255,16 @@ export default function LearningAssistant(
             >
               <HelpCircle size={15} /> Getting started guide
             </button>
+            {a.enabled && active && safeUrl(active.url) && (
+              <a
+                className="button"
+                href={safeUrl(active.url)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open recommended course <ArrowRight size={15} />
+              </a>
+            )}
             {a.enabled && (
               <button
                 className="button"

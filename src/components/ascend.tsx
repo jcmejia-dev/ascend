@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { currentAccount } from "@/lib/account";
 import LearningAssistant from "./learning-assistant";
 import { preserveAssistantEdits } from "@/lib/learning-assistant";
+import { reconcileCertificate } from "@/lib/certificate-link";
 import {
   LayoutDashboard,
   BookOpen,
@@ -371,19 +372,18 @@ export default function Ascend() {
       existing?.status !== "Completed"
     )
       updated.completionDate = dateKey(new Date(), s.profile.timezone);
-    await persist(
-      {
-        ...s,
-        records: {
-          ...s.records,
-          [kind]: existing
-            ? s.records[kind].map((c) => (c.id === r.id ? updated : c))
-            : [...s.records[kind], updated],
-        },
+    const next = {
+      ...s,
+      records: {
+        ...s.records,
+        [kind]: existing
+          ? s.records[kind].map((c) => (c.id === r.id ? updated : c))
+          : [...s.records[kind], updated],
       },
-      files,
-      remove,
-    );
+    };
+    const reconciled =
+      kind === "certificates" ? reconcileCertificate(next, updated) : null;
+    await persist(reconciled?.state ?? next, files, remove);
   }
   async function saveRecord(
     r: RecordItem,
@@ -395,7 +395,25 @@ export default function Ascend() {
     if (dialog.item?.id) r.updatedAt = String(dialog.item.updatedAt);
     await patch(dialog.kind, r, files, remove);
     setDialog(null);
-    setToast("Record saved.");
+    if (dialog.kind === "certificates") {
+      const certificate = latest.current.records.certificates.find(
+        (c) => c.id === r.id,
+      );
+      const course = latest.current.records.courses.find(
+        (c) => c.id === certificate?.courseId,
+      );
+      setToast(
+        course?.completionSource ===
+          "User-recorded certificate evidence (unverified)" &&
+          course.completionDate === certificate?.issueDate
+          ? "Certificate linked; related course marked completed (self-reported)."
+          : course
+            ? "Certificate saved and linked to its course."
+            : "Certificate saved. Link it to a course to track completion.",
+      );
+    } else {
+      setToast("Record saved.");
+    }
   }
   function remove(kind: Kind, r: RecordItem) {
     if (

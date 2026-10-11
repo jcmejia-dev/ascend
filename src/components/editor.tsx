@@ -104,6 +104,16 @@ export default function Editor({
       wide
     >
       <form onSubmit={submit} className="record-form">
+        {kind === "certificates" && (
+          <p className="muted" role="note">
+            Record an earned credential and attach its PDF, image, or verification
+            link. ASCEND links an exact title/provider match to your tracked
+            course automatically, or you can select the related course below.
+            When evidence and an issue date are present, the linked course is
+            recorded as completed. This is your record, not independent
+            verification by the issuing organization.
+          </p>
+        )}
         <div className="form-grid">
           {forms[kind].map((field) => (
             <label

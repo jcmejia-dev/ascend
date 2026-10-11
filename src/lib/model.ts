@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { dateKey } from "./dates";
+export { dateKey } from "./dates";
 import {
   educationSchema,
   emptyEducation,
@@ -139,13 +141,7 @@ export const roadmapDefaults: Record<string, string[]> = {
     "Deployment",
   ],
 };
-export const dateKey = (date = new Date(), timezone = "Asia/Manila") =>
-  new Intl.DateTimeFormat("en-CA", {
-    timeZone: timezone,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(date);
+
 export function emptyState(): State {
   const now = new Date().toISOString();
   const records = Object.fromEntries(
