@@ -29,6 +29,15 @@ import {
   RefreshCw,
   Plus,
   Compass as CompassIcon,
+  Trophy,
+  ScrollText,
+  Route,
+  Gamepad2,
+  TrendingUp,
+  CalendarCheck2,
+  Milestone,
+  TerminalSquare,
+  Wrench,
 } from "lucide-react";
 import {
   emptyState,
@@ -77,20 +86,20 @@ const LearningProgress = dynamic(() =>
 const navigation = [
   { label: "Dashboard", icon: LayoutDashboard },
   { label: "My Learning", icon: BookOpen },
-  { label: "Career Paths", icon: Map },
+  { label: "Career Paths", icon: Route },
   { label: "Discover Courses", icon: CompassIcon },
   { label: "Coding Academy", icon: Code2 },
-  { label: "Daily Challenge", icon: Target },
-  { label: "Code Arcade", icon: Sparkles },
-  { label: "Achievements", icon: Award },
-  { label: "Progress", icon: ChartNoAxesCombined },
-  { label: "Certificates", icon: Award },
+  { label: "Daily Challenge", icon: CalendarCheck2 },
+  { label: "Code Arcade", icon: Gamepad2 },
+  { label: "Achievements", icon: Trophy },
+  { label: "Progress", icon: TrendingUp },
+  { label: "Certificates", icon: ScrollText },
   { label: "Settings", icon: SettingsIcon },
   { label: "Courses", icon: BookOpen },
-  { label: "Roadmap", icon: Map },
-  { label: "Practice", icon: Code2 },
+  { label: "Roadmap", icon: Milestone },
+  { label: "Practice", icon: TerminalSquare },
   { label: "Projects", icon: FolderGit2 },
-  { label: "Skills", icon: Sparkles },
+  { label: "Skills", icon: Wrench },
   { label: "Analytics", icon: ChartNoAxesCombined },
   { label: "Goals", icon: Target },
   { label: "Career", icon: BriefcaseBusiness },
@@ -645,33 +654,48 @@ export default function Ascend() {
         <div className="workspace-label">YOUR WORKSPACE</div>
         <nav aria-label="Main navigation">
           {navigation.map((n, i) => (
-            <button
-              key={n.label}
-              className={`nav-item ${page === n.label ? "selected" : ""} ${i === 11 ? "nav-divider" : ""}`}
-              onClick={() => navigate(n.label)}
-              aria-current={page === n.label ? "page" : undefined}
-            >
-              <n.icon size={18} />
-              <span>{n.label}</span>
-              {n.label === "Courses" &&
-                state.records.courses.filter(
-                  (c) => c.status === "In Progress" && !c.archived,
-                ).length > 0 && (
-                  <small>
-                    {
-                      state.records.courses.filter(
-                        (c) => c.status === "In Progress" && !c.archived,
-                      ).length
-                    }
-                  </small>
-                )}
-            </button>
+            <div className="nav-entry" key={n.label}>
+              {[0, 7, 11, 19].includes(i) && (
+                <div className="nav-section-label" aria-hidden="true">
+                  {i === 0
+                    ? "LEARN"
+                    : i === 7
+                      ? "MILESTONES"
+                      : i === 11
+                        ? "LIBRARY"
+                        : "UTILITIES"}
+                </div>
+              )}
+              <button
+                className={`nav-item ${page === n.label ? "selected" : ""}`}
+                onClick={() => navigate(n.label)}
+                aria-current={page === n.label ? "page" : undefined}
+              >
+                <span className="nav-icon">
+                  <n.icon size={17} strokeWidth={1.8} />
+                </span>
+                <span>{n.label}</span>
+                {n.label === "Courses" &&
+                  state.records.courses.filter(
+                    (c) => c.status === "In Progress" && !c.archived,
+                  ).length > 0 && (
+                    <small>
+                      {
+                        state.records.courses.filter(
+                          (c) => c.status === "In Progress" && !c.archived,
+                        ).length
+                      }
+                    </small>
+                  )}
+              </button>
+            </div>
           ))}
         </nav>
         <div className="sidebar-bottom">
           <div className="local-label">
             <span className="status-dot" />
-            Saved on this device <small>v{VERSION}</small>
+            {currentAccount() ? "Account workspace" : "Saved on this device"}{" "}
+            <small>v{VERSION}</small>
           </div>
           <button
             className="profile-button"

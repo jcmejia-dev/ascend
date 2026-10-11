@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, type ReactNode } from "react";
-import { X, ArrowUpRight, Plus } from "lucide-react";
+import { X, ArrowUpRight, Plus, BookOpenCheck } from "lucide-react";
 export function Modal({
   title,
   onClose,
@@ -64,7 +64,7 @@ export function Empty({
 }) {
   return (
     <div className="empty">
-      <div className="empty-mark">↗</div>
+      <div className="empty-mark" aria-hidden="true"><BookOpenCheck size={22} strokeWidth={1.65} /></div>
       <h3>{title}</h3>
       <p>{description}</p>
       {action && (

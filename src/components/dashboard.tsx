@@ -272,10 +272,10 @@ export default function Dashboard({
             ))
           ) : (
             <Empty
-              title="Your next chapter starts here"
-              description="Add a course you’re taking and make your first step visible."
-              action={() => add("courses")}
-              label="Add your first course"
+              title="Find your next course"
+              description="Explore curated courses and recommendations based on your career direction. ASCEND will help you track the next step."
+              action={() => navigate("Discover Courses")}
+              label="Explore recommended courses"
             />
           )}
         </section>

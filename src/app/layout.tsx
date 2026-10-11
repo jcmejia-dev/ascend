@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./refinement.css";
 export const metadata: Metadata = {
   title: "ASCEND — Learn. Build. Prove.",
   description: "Your personal learning and certification companion.",
