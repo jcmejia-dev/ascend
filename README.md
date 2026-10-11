@@ -7,7 +7,7 @@
 Requires Node.js 24 or newer and npm. In PowerShell:
 
 ```powershell
-cd C:\Users\pc\OneDrive\Documents\Projects\Certificaties
+cd path/to/ascend
 npm ci
 npm run dev
 ```
@@ -67,21 +67,23 @@ ASCEND can link it to a uniquely matching tracked course (or a course you
 selected) and record completion based on your entered issue date. This is a
 **user-reported completion**, not provider-verified synchronization.
 
-**Public accounts are not yet Vercel-ready.** The existing account server uses
-SQLite on a persistent Node host, while the static Vercel build stores records
-only in each browser. A proposed Neon schema and production migration
-requirements are in [docs/VERCEL-NEON.md](docs/VERCEL-NEON.md). Do not
-advertise cross-device sync until that backend is implemented and tested.
+**Vercel cloud accounts:** PostgreSQL-backed registration, login and workspace
+endpoints are implemented under `api/`. They require Neon migrations,
+`DATABASE_URL` in Vercel, and passing cloud integration checks. The standalone
+Node server continues to use SQLite. See
+[docs/VERCEL-NEON.md](docs/VERCEL-NEON.md) for cloud deployment, attachment
+limits and current recovery/verification limitations.
 
-## Static-only deployment to Vercel
+## Deploy to Vercel (cloud or local workspace)
 
-1. Put this folder into a Git repository and push to a repository you control. No GitHub repository or deployment is created automatically.
-2. Import the repository in Vercel. Choose the **Other** framework preset (this is a Next.js static export).
-3. Set install command `npm ci`, build command `npm run build`, output directory `out`. The included `vercel.json` already defines these build/output settings and security/cache headers.
-4. Deploy. No API keys, database URL, or other environment variables are needed.
-5. On the deployed URL, check `/manifest.webmanifest` and `/sw.js`, make one course, export a backup, reload offline, and install on your phone.
+1. Import this GitHub repository into Vercel with the **Other** framework preset.
+2. Use `npm ci`, `npm run build` and output directory `out`, as specified in `vercel.json`. Vercel also deploys the Node functions in `api/`.
+3. For cloud accounts, configure the server-only `DATABASE_URL` variable with your Neon PostgreSQL pooled TLS connection string and apply the two SQL migrations.
+4. Test `/api/auth/session` and complete a two-account isolation test before inviting users. Read [the Neon deployment guide](docs/VERCEL-NEON.md) for exact steps.
+5. For local-only use, choose **Continue on this device**. Local records and files stay in browser IndexedDB and do not sync between devices; use export/import backups.
+6. Confirm the PWA manifest, service worker, online/offline behavior and certificate evidence handling on the deployed HTTPS domain.
 
-Certificate data is never uploaded to Vercel. Hosting provides application files only. Opening the site on desktop and phone creates **separate local databases**. Move records between them with a backup export/import. Import replaces current records rather than merging them, and requires a confirmation showing record and attachment counts.
+Cloud-account records and uploaded certificates are sent to the private PostgreSQL database. They are never placed in public static assets. Cloud writes require an internet connection. Email verification and self-service password recovery are not yet implemented.
 
 ## Verification
 
@@ -97,7 +99,7 @@ The GitHub Actions workflow runs these checks on pushes and pull requests. End-t
 
 ## Storage and privacy
 
-- Local-workspace records and Blob attachments live in **IndexedDB**, database `ascend`, version 1. Account records and attachments live in the server SQLite database, isolated by authenticated user ID. Account edits require a connection; no offline synchronization queue is implemented.
+- Local-workspace records and Blob attachments live in **IndexedDB**, database `ascend`, version 1. The standalone Node account server uses SQLite; Vercel cloud accounts use Neon PostgreSQL. Both isolate account records by authenticated user ID. Account edits require a connection; no offline synchronization queue is implemented.
 - Data writes and file changes use one transaction. Revision checks prevent stale tabs from overwriting newer records. BroadcastChannel refreshes other open tabs; a stale edit is rejected and can be reopened.
 - A browser origin (scheme + hostname + port) owns its database. Changing the origin, clearing browser data, uninstalling with data removal, browser eviction, or losing the device can lose access to records. A persistent-storage request can reduce eviction risk, but does not replace backups.
 - Local data is not encrypted by ASCEND. Anyone with access to your browser profile or an exported backup may access it. Protect your device and backups.

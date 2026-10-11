@@ -49,6 +49,9 @@ export async function saveAccount(
         ),
         ...files,
       ];
+  const totalBytes = attachments.reduce((sum, file) => sum + file.blob.size, 0);
+  if (attachments.length > 20 || attachments.some((file) => file.blob.size > 2 * 1024 * 1024) || totalBytes > 3 * 1024 * 1024)
+    throw new Error("Cloud accounts currently allow up to 20 attachments, 2 MB per file and 3 MB total. Compress the certificate or use the local workspace.");
   const encoded = await Promise.all(attachments.map(encode));
   if (!accountId || currentAccount()?.id !== accountId)
     throw new Error("The account changed. Sign in and try again.");

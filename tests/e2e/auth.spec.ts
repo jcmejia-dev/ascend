@@ -21,6 +21,11 @@ async function register(page: Page, email: string, name: string) {
   await expect(
     page.getByRole("heading", { name: new RegExp(`Good .*${name}`) }),
   ).toBeVisible();
+  const guide = page.getByRole("dialog", { name: "Your ASCEND getting started guide" });
+  if (await guide.isVisible()) {
+    await guide.getByRole("button", { name: "Close dialog" }).click();
+    await expect(guide).not.toBeVisible();
+  }
 }
 async function login(page: Page, email: string) {
   await page.getByLabel("Email address").fill(email);
@@ -157,11 +162,11 @@ test("authentication forms are accessible and retain the local workspace option"
     .getByRole("button", { name: "Continue on this device", exact: true })
     .click();
   await expect(
-    page.getByRole("heading", { name: /Good .*Jamie/ }),
+    page.getByRole("heading", { name: /Good .*Learner/ }),
   ).toBeVisible();
   await page.reload();
   await expect(
-    page.getByRole("heading", { name: /Good .*Jamie/ }),
+    page.getByRole("heading", { name: /Good .*Learner/ }),
   ).toBeVisible();
 });
 

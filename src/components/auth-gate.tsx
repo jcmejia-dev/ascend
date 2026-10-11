@@ -208,8 +208,8 @@ export default function AuthGate() {
           {error && <p role="alert">{error}</p>}
           {!available && (
             <p role="status">
-              Account server unavailable. Start the app with npm start, or use
-              your local workspace.
+              Cloud accounts are temporarily unavailable. You can continue
+              using a local workspace or try again later.
             </p>
           )}
           <button className="primary" disabled={busy || !available}>

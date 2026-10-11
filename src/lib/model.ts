@@ -178,12 +178,11 @@ export function emptyState(): State {
     schema: 1,
     revision: 0,
     profile: {
-      name: "Jamie",
-      title: "Aspiring full-stack developer",
-      careerGoals:
-        "Build independent programming ability and a credible portfolio.",
-      learningHours: "Evenings",
-      timezone: "Asia/Manila",
+      name: "Learner",
+      title: "",
+      careerGoals: "",
+      learningHours: "",
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC",
       theme: "dark",
       weeklyHours: 10,
       role: "Junior Full-Stack Developer",

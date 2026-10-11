@@ -7,8 +7,13 @@ async function open(page: Page) {
     .getByRole("button", { name: "Continue on this device", exact: true })
     .click();
   await expect(
-    page.getByRole("heading", { name: /Good .*Jamie/ }),
+    page.getByRole("heading", { name: /Good .*Learner/ }),
   ).toBeVisible();
+  const guide = page.getByRole("dialog", { name: "Your ASCEND getting started guide" });
+  if (await guide.isVisible()) {
+    await guide.getByRole("button", { name: "Close dialog" }).click();
+    await expect(guide).not.toBeVisible();
+  }
 }
 async function nav(page: Page, label: string) {
   if (
@@ -363,7 +368,7 @@ test("only a genuinely installed new worker triggers update UI", async ({
     page.once("dialog", (d) => d.accept());
     await page.getByRole("button", { name: "Update now" }).click();
     await expect(
-      page.getByRole("heading", { name: /Good .*Jamie/ }),
+      page.getByRole("heading", { name: /Good .*Learner/ }),
     ).toBeVisible();
     await expect(
       page.getByText("A new version of ASCEND is ready."),
