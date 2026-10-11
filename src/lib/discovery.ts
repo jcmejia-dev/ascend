@@ -1,7 +1,7 @@
-import { catalog } from "./catalog";
-import { allTracks, emptyEducation, mastery } from "./education";
-import type { State } from "./model";
-import type { LiveCourse } from "./assistant-schema";
+import { catalog } from "./catalog.js";
+import { allTracks, emptyEducation, mastery } from "./education.js";
+import type { State } from "./model.js";
+import type { LiveCourse } from "./assistant-schema.js";
 export function onlineResource(c: LiveCourse): Resource {
   return {
     id: c.id,

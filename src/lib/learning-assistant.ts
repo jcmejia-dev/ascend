@@ -1,6 +1,6 @@
-import { emptyEducation, allTracks, dailyPlan } from "./education";
-import { recommendResources } from "./discovery";
-import { dateKey, addDays, goalProgress, type State } from "./model";
+import { emptyEducation, allTracks, dailyPlan } from "./education.js";
+import { recommendResources } from "./discovery.js";
+import { dateKey, addDays, goalProgress, type State } from "./model.js";
 export const canonicalCourseUrl = (url: string) => {
   try {
     const u = new URL(url);

@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { createCourseSearch } from "../scripts/course-search";
+import { createCourseSearch } from "../scripts/course-search.js";
 
 // Vercel Node function. No user records, credentials or private documents are
 // accepted by this public endpoint. It only queries allowlisted catalogues.

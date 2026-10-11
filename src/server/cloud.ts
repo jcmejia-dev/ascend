@@ -1,14 +1,14 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
-import { database } from "./db";
+import { database } from "./db.js";
 import {
   allowedOrigin, cookie, credentialsSchema, getSessionToken, hashPassword,
   hashToken, newSalt, newToken, publicError, readJson, respond, verifyPassword,
-} from "./security";
-import { emptyState, validateState, validateFile } from "../lib/model";
-import { applyAssistance } from "../lib/learning-assistant";
-import { syncAwards } from "../lib/education";
+} from "./security.js";
+import { emptyState, validateState, validateFile } from "../lib/model.js";
+import { applyAssistance } from "../lib/learning-assistant.js";
+import { syncAwards } from "../lib/education.js";
 
 type User = { id: string; email: string; name: string };
 const sessionDays = 7;
