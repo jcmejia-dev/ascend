@@ -27,6 +27,11 @@ async function open(page: Page) {
   await expect(
     page.getByRole("heading", { name: /Good .*Learner/ }),
   ).toBeVisible();
+  const guide = page.getByRole("dialog", { name: "Your ASCEND getting started guide" });
+  if (await guide.isVisible()) {
+    await guide.getByRole("button", { name: "Close dialog" }).click();
+    await expect(guide).not.toBeVisible();
+  }
 }
 async function code(page: Page, source: string) {
   const editor = page.getByRole("textbox", { name: "JavaScript solution" });
