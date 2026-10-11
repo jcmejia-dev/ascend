@@ -25,7 +25,7 @@ async function open(page: Page) {
     .getByRole("button", { name: "Continue on this device", exact: true })
     .click();
   await expect(
-    page.getByRole("heading", { name: /Good .*Jamie/ }),
+    page.getByRole("heading", { name: /Good .*Learner/ }),
   ).toBeVisible();
 }
 async function code(page: Page, source: string) {
