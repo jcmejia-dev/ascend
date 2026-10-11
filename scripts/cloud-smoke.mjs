@@ -68,14 +68,33 @@ try {
   check(one.body.state.profile.name === "Test One" && two.body.state.profile.name === "Test Two", "workspaces isolated");
   const changed = structuredClone(one.body.state);
   changed.profile.careerGoals = "Private goal for account one";
+  const certificateId = randomUUID();
+  const pdf = Buffer.from("%PDF-1.4\\n1 0 obj\\n<< /Type /Catalog >>\\nendobj\\n%%EOF\\n").toString("base64");
+  const timestamp = new Date().toISOString();
+  changed.records.courses.push({
+    id: "cloud-course", title: "Cloud Testing Fundamentals",
+    provider: "ASCEND Test", status: "Completed",
+    completionDate: timestamp.slice(0, 10),
+    createdAt: timestamp, updatedAt: timestamp,
+  });
+  changed.records.certificates.push({
+    id: "cloud-cert", title: "Cloud Testing Fundamentals",
+    organization: "ASCEND Test", courseId: "cloud-course",
+    issueDate: timestamp.slice(0, 10), pdfId: certificateId,
+    createdAt: timestamp, updatedAt: timestamp,
+  });
   const saved = await request("/api/workspace", "PUT", {
-    state: changed, expectedRevision: 0, files: [],
+    state: changed, expectedRevision: 0,
+    files: [{ id: certificateId, name: "smoke.pdf", type: "application/pdf", data: pdf }],
   }, a.cookie, a.body.user.id);
   check(saved.status === 200 && saved.body.state.revision === 1, "durable workspace update");
   const repeat = await request("/api/workspace", "GET", undefined, a.cookie, a.body.user.id);
   check(repeat.body.state.profile.careerGoals === "Private goal for account one", "read-after-write persistence");
+  check(repeat.body.files.length === 1 && repeat.body.files[0].data === pdf, "private certificate attachment round-trip");
+  check(repeat.body.state.records.certificates[0].pdfId === certificateId, "certificate evidence linked to account");
   const other = await request("/api/workspace", "GET", undefined, b.cookie, b.body.user.id);
   check(other.body.state.profile.careerGoals !== "Private goal for account one", "other account cannot read private data");
+  check(other.body.files.length === 0 && other.body.state.records.certificates.length === 0, "other account cannot read certificate evidence");
   const wrongUser = await request("/api/workspace", "GET", undefined, b.cookie, a.body.user.id);
   check(wrongUser.status === 403, "rejects mismatched account header");
   const stale = await request("/api/workspace", "PUT", {
