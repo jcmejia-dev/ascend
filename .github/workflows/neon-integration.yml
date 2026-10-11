@@ -12,12 +12,23 @@ on:
       - "scripts/neon-migrate.mjs"
       - "package-lock.json"
       - ".github/workflows/neon-integration.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "db/**"
+      - "src/server/**"
+      - "api/auth/**"
+      - "api/workspace.ts"
+      - "scripts/cloud-smoke.mjs"
+      - "scripts/neon-migrate.mjs"
+      - "package-lock.json"
+      - ".github/workflows/neon-integration.yml"
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
   cloud:
-    if: github.repository == 'jcmejia-dev/ascend'
+    if: github.repository == 'jcmejia-dev/ascend' && (github.event_name != 'pull_request' || (github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'feature/guided-learning-and-certificate-sync'))
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
