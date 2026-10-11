@@ -30,7 +30,8 @@ async function compile(file) {
   const out = join(temp, normalized.replace(/\.(ts|tsx)$/, ".js"));
   await mkdir(dirname(out), { recursive: true });
   await writeFile(out, code);
-  const imports = [...code.matchAll(/(?:from\s*|import\s*)["'](\.{1,2}\/[^"']+)["']/g)];
+  // Match actual emitted import/export statements, not lesson text strings.
+  const imports = [...code.matchAll(/^\s*(?:import|export|})[^\n]*?\bfrom\s*["'](\.{1,2}\/[^"']+)["']/gm)];
   for (const match of imports) {
     const specifier = match[1];
     if (!/\.(?:js|mjs|cjs|json)$/.test(specifier))
