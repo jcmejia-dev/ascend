@@ -1,0 +1,40 @@
+name: ASCEND Neon integration
+on:
+  push:
+    branches:
+      - feature/guided-learning-and-certificate-sync
+    paths:
+      - "db/**"
+      - "src/server/**"
+      - "api/auth/**"
+      - "api/workspace.ts"
+      - "scripts/cloud-smoke.mjs"
+      - "scripts/neon-migrate.mjs"
+      - "package-lock.json"
+      - ".github/workflows/neon-integration.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cloud:
+    if: github.repository == 'jcmejia-dev/ascend'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - name: Apply non-destructive Neon schema migrations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npm run db:migrate
+      - name: Test registration, isolation, persistence and logout
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npm run test:cloud
