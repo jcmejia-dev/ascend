@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { assistantSchema, emptyAssistant } from "./assistant-schema";
+import { assistantSchema, emptyAssistant } from "./assistant-schema.js";
 import {
   lessons,
   questions,
@@ -7,9 +7,9 @@ import {
   capstones,
   interviews,
   BANK_VERSION,
-} from "./academy-content";
-import type { State } from "./model";
-import { dateKey } from "./dates";
+} from "./academy-content.js";
+import type { State } from "./model.js";
+import { dateKey } from "./dates.js";
 const text = z.string().max(10000);
 const attemptSchema = z.object({
   id: z.string(),
