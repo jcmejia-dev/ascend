@@ -320,8 +320,8 @@ export default function LearningAssistant(
           }}
         >
           <div className="guide-body">
-            <div className="guide-steps" aria-label={`Step ${step + 1} of 3`}>
-              {["Your direction", "Your automatic plan", "How to learn"].map(
+            <div className="guide-steps" aria-label={`Step ${step + 1} of 4`}>
+              {["Your direction", "Your automatic plan", "How to learn", "Certificates"].map(
                 (label, i) => (
                   <span key={label} className={step === i ? "active" : ""}>
                     {i + 1}. {label}
@@ -437,6 +437,23 @@ export default function LearningAssistant(
                 </p>
               </>
             )}
+            {step === 3 && (
+              <>
+                <span className="eyebrow">Finish. Record. Continue.</span>
+                <h3>Keep your learning evidence together.</h3>
+                <ol className="guide-list">
+                  <li>Open a recommended course from Dashboard and study on the provider website.</li>
+                  <li>When you actually earn a certificate, open <strong>Certificates</strong> and select <strong>Add certificate</strong>.</li>
+                  <li>Enter the issuer and issue date, then attach a PDF, image, or credential verification link.</li>
+                  <li>ASCEND links an unambiguous matching course and records completion based on your evidence. The assistant can then suggest the next course.</li>
+                </ol>
+                <p className="muted">
+                  External sites do not automatically share completion data with ASCEND.
+                  Recorded certificates are self-reported until verified by their issuer.
+                  You can edit or correct your learning records at any time.
+                </p>
+              </>
+            )}
             {message && <p role="status">{message}</p>}
             <div className="learning-actions">
               {step > 0 && (
@@ -448,12 +465,12 @@ export default function LearningAssistant(
                   Back
                 </button>
               )}
-              {step < 2 ? (
+              {step < 3 ? (
                 <button
                   className="button primary"
                   onClick={() => setStep(step + 1)}
                 >
-                  Next: {step === 0 ? "your automatic plan" : "how to learn"}
+                  Next: {step === 0 ? "your automatic plan" : step === 1 ? "how to learn" : "certificates"}
                   <ArrowRight size={15} />
                 </button>
               ) : (
