@@ -1,6 +1,6 @@
 import { load } from "cheerio";
 import { createHash } from "node:crypto";
-import { liveCourseSchema, type LiveCourse } from "../src/lib/assistant-schema";
+import { liveCourseSchema, type LiveCourse } from "../src/lib/assistant-schema.js";
 export const catalogSources = [
   {
     url: "https://cs50.harvard.edu/x/courses/",
