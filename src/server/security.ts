@@ -37,8 +37,13 @@ export function allowedOrigin(req: IncomingMessage) {
   if (!/^[a-z0-9.-]+(?::\d{2,5})?$/i.test(host)) return false;
   const configured = process.env.ASCEND_ORIGIN;
   const expected = configured || `https://${host}`;
-  if (!expected.startsWith("https://") || new URL(expected).host !== host)
+  try {
+    const parsed = new URL(expected);
+    if (parsed.protocol !== "https:" || parsed.origin !== expected || parsed.host !== host)
+      return false;
+  } catch {
     return false;
+  }
   return req.method === "GET" || req.method === "HEAD" ||
     req.headers.origin === expected;
 }
