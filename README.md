@@ -55,6 +55,24 @@ An **Update available** button appears only when a replacement service worker ha
 
 Automated Chromium checks cover offline reload and actual service-worker replacement at desktop and Android-sized viewports. Installation on a physical Android device and browser-specific PDF viewing still need your device check. No Lighthouse score is claimed.
 
+## Assisted course tracking and certificate linking
+
+ASCEND includes a first-run guided setup, an assisted course queue and
+automatically evaluated in-app coding practice. On Vercel, the public
+`/api/course-search` serverless function can query allowlisted official
+course catalogues when providers are available.
+
+When you save a certificate with an attached PDF, image or verification URL,
+ASCEND can link it to a uniquely matching tracked course (or a course you
+selected) and record completion based on your entered issue date. This is a
+**user-reported completion**, not provider-verified synchronization.
+
+**Public accounts are not yet Vercel-ready.** The existing account server uses
+SQLite on a persistent Node host, while the static Vercel build stores records
+only in each browser. A proposed Neon schema and production migration
+requirements are in [docs/VERCEL-NEON.md](docs/VERCEL-NEON.md). Do not
+advertise cross-device sync until that backend is implemented and tested.
+
 ## Static-only deployment to Vercel
 
 1. Put this folder into a Git repository and push to a repository you control. No GitHub repository or deployment is created automatically.
