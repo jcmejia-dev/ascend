@@ -10,6 +10,8 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Verify native Node ESM Vercel API imports
+        run: node scripts/check-vercel-esm.mjs
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
