@@ -98,7 +98,8 @@ try {
   const wrongUser = await request("/api/workspace", "GET", undefined, b.cookie, a.body.user.id);
   check(wrongUser.status === 403, "rejects mismatched account header");
   const stale = await request("/api/workspace", "PUT", {
-    state: changed, expectedRevision: 0, files: [],
+    state: changed, expectedRevision: 0,
+    files: [{ id: certificateId, name: "smoke.pdf", type: "application/pdf", data: pdf }],
   }, a.cookie, a.body.user.id);
   check(stale.status === 409, "rejects stale revision");
   const crossOrigin = await request("/api/workspace", "PUT", {
