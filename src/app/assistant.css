@@ -1,0 +1,144 @@
+.assistant-panel {
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  margin-bottom: 22px;
+  background:
+    linear-gradient(120deg, #8fb1dc12, transparent 65%), var(--surface);
+}
+.assistant-panel h2 {
+  font-size: 25px;
+  letter-spacing: -0.035em;
+  margin: 12px 0;
+}
+.assistant-panel p {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+.assistant-panel .learning-actions {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.assistant-next {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+}
+.assistant-panel .eyebrow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.guide-body {
+  padding: 25px 28px 30px;
+  display: grid;
+  gap: 18px;
+}
+.guide-body h3 {
+  font-size: 26px;
+  letter-spacing: -0.035em;
+  margin: 0;
+}
+.guide-body p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--muted);
+}
+.guide-body label {
+  display: grid;
+  gap: 9px;
+  font-size: 13px;
+}
+.guide-body select {
+  width: 100%;
+  background: var(--bg);
+  color: var(--text);
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.guide-steps {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.guide-steps span {
+  padding: 8px 10px;
+  font-size: 11px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+}
+.guide-steps .active {
+  background: var(--surface-2);
+  color: var(--text);
+  border-color: var(--muted);
+}
+.guide-list {
+  display: grid;
+  gap: 16px;
+  padding-left: 22px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.guide-list strong {
+  color: var(--text);
+}
+.guide-body .learning-actions {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.live-search {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.live-search > div {
+  flex: 1;
+  min-width: 180px;
+}
+.live-search p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin-top: 8px;
+}
+.live-search [role="status"] {
+  flex-basis: 100%;
+}
+.assistant-record-note {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 8px 0;
+  line-height: 1.6;
+}
+@media (max-width: 600px) {
+  .assistant-panel {
+    padding: 22px;
+  }
+  .assistant-panel h2 {
+    font-size: 23px;
+  }
+  .assistant-panel .button {
+    white-space: normal;
+    text-align: left;
+  }
+  .guide-body {
+    padding: 20px;
+  }
+  .guide-body h3 {
+    font-size: 23px;
+  }
+  .guide-steps span {
+    font-size: 10px;
+  }
+  .live-search .button {
+    width: 100%;
+  }
+}

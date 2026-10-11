@@ -1,0 +1,156 @@
+.auth-screen {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 32px 20px;
+  background:
+    radial-gradient(ellipse at 10% 10%, #708fbc20, transparent 55%), var(--bg);
+  color: var(--text);
+}
+.auth-card {
+  width: min(100%, 460px);
+  padding: 36px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: 0 20px 80px #0002;
+}
+.auth-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--text);
+  margin-bottom: 34px;
+}
+.auth-brand span {
+  letter-spacing: 0;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 400;
+}
+.auth-card h1 {
+  font-size: 29px;
+  letter-spacing: -0.04em;
+  margin-bottom: 12px;
+}
+.auth-card p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+.auth-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 5px;
+  background: var(--surface-2);
+  border-radius: 12px;
+  margin: 25px 0;
+}
+.auth-tabs button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  color: var(--muted);
+}
+.auth-tabs button[aria-pressed="true"] {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 5px #0002;
+}
+.auth-card form {
+  display: grid;
+  gap: 17px;
+}
+.auth-card label {
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.auth-card input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text);
+}
+.auth-card small {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.auth-card .primary {
+  padding: 13px;
+  border-radius: 10px;
+  background: #91b5e8;
+  color: #16243b;
+  font-weight: 600;
+}
+.auth-card button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+.auth-card [role="alert"] {
+  color: var(--text);
+  border-left: 3px solid #d88c85;
+  padding-left: 12px;
+  margin: 0;
+}
+.auth-local {
+  display: grid;
+  gap: 14px;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+  margin-top: 25px;
+}
+.auth-local button {
+  font-size: 13px;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.account-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+  padding: 9px 20px;
+  height: 44px;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 12px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  z-index: 60;
+}
+.account-bar + .app-shell {
+  min-height: calc(100dvh - 44px);
+}
+.account-bar + .app-shell .sidebar {
+  top: 44px;
+}
+.account-bar button {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 5px 9px;
+  color: var(--text);
+  white-space: nowrap;
+}
+.account-bar span {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .auth-card {
+    padding: 26px 22px;
+  }
+  .account-bar {
+    font-size: 10px;
+    padding: 7px 12px;
+    gap: 10px;
+  }
+}
