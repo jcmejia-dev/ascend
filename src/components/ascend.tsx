@@ -657,7 +657,13 @@ export default function Ascend() {
             <div className="nav-entry" key={n.label}>
               {[0, 7, 11, 19].includes(i) && (
                 <div className="nav-section-label" aria-hidden="true">
-                  {i === 0 ? "LEARN" : i === 7 ? "MILESTONES" : i === 11 ? "LIBRARY" : "UTILITIES"}
+                  {i === 0
+                    ? "LEARN"
+                    : i === 7
+                      ? "MILESTONES"
+                      : i === 11
+                        ? "LIBRARY"
+                        : "UTILITIES"}
                 </div>
               )}
               <button
@@ -665,20 +671,22 @@ export default function Ascend() {
                 onClick={() => navigate(n.label)}
                 aria-current={page === n.label ? "page" : undefined}
               >
-                <span className="nav-icon"><n.icon size={17} strokeWidth={1.8} /></span>
-              <span>{n.label}</span>
-              {n.label === "Courses" &&
-                state.records.courses.filter(
-                  (c) => c.status === "In Progress" && !c.archived,
-                ).length > 0 && (
-                  <small>
-                    {
-                      state.records.courses.filter(
-                        (c) => c.status === "In Progress" && !c.archived,
-                      ).length
-                    }
-                  </small>
-                )}
+                <span className="nav-icon">
+                  <n.icon size={17} strokeWidth={1.8} />
+                </span>
+                <span>{n.label}</span>
+                {n.label === "Courses" &&
+                  state.records.courses.filter(
+                    (c) => c.status === "In Progress" && !c.archived,
+                  ).length > 0 && (
+                    <small>
+                      {
+                        state.records.courses.filter(
+                          (c) => c.status === "In Progress" && !c.archived,
+                        ).length
+                      }
+                    </small>
+                  )}
               </button>
             </div>
           ))}
@@ -686,7 +694,8 @@ export default function Ascend() {
         <div className="sidebar-bottom">
           <div className="local-label">
             <span className="status-dot" />
-            Saved on this device <small>v{VERSION}</small>
+            {currentAccount() ? "Account workspace" : "Saved on this device"}{" "}
+            <small>v{VERSION}</small>
           </div>
           <button
             className="profile-button"
