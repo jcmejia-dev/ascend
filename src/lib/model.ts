@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { dateKey } from "./dates";
-export { dateKey } from "./dates";
+import { dateKey } from "./dates.js";
+export { dateKey } from "./dates.js";
 import {
   educationSchema,
   emptyEducation,
   validateEducation,
   type Education,
-} from "./education";
+} from "./education.js";
 export const VERSION = "2.0.0";
 export type Kind =
   | "courses"
